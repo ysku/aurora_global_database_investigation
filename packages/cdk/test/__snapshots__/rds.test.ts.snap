@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RDSStack snapshot 1`] = `
+Object {
+  "Resources": Object {
+    "RDSE0E96D00": Object {
+      "DeletionPolicy": "Snapshot",
+      "Properties": Object {
+        "DBClusterIdentifier": "test-db-cluster-name",
+        "DBClusterParameterGroupName": Object {
+          "Ref": "RDSParameterGroup973BA941",
+        },
+        "DBSubnetGroupName": Object {
+          "Ref": "RDSSubnets873FC54A",
+        },
+        "DatabaseName": "test-db-name",
+        "Engine": "aurora-postgresql",
+        "EngineVersion": "10.7",
+        "MasterUserPassword": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{{resolve:secretsmanager:",
+              Object {
+                "Ref": "SecretA720EF05",
+              },
+              ":SecretString:password::}}",
+            ],
+          ],
+        },
+        "MasterUsername": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{{resolve:secretsmanager:",
+              Object {
+                "Ref": "SecretA720EF05",
+              },
+              ":SecretString:username::}}",
+            ],
+          ],
+        },
+        "Port": 5432,
+        "VpcSecurityGroupIds": Array [
+          Object {
+            "Fn::ImportValue": "TestVPCStack:ExportsOutputFnGetAttdbsgB988D619GroupId34E3B055",
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBCluster",
+      "UpdateReplacePolicy": "Snapshot",
+    },
+    "RDSInstance173AB26B0": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "DBClusterIdentifier": Object {
+          "Ref": "RDSE0E96D00",
+        },
+        "DBInstanceClass": "db.r4.large",
+        "DBInstanceIdentifier": "test-db-cluster-nameinstance1",
+        "DBSubnetGroupName": Object {
+          "Ref": "RDSSubnets873FC54A",
+        },
+        "Engine": "aurora-postgresql",
+        "EngineVersion": "10.7",
+        "PubliclyAccessible": false,
+      },
+      "Type": "AWS::RDS::DBInstance",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RDSInstance21447102B": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "DBClusterIdentifier": Object {
+          "Ref": "RDSE0E96D00",
+        },
+        "DBInstanceClass": "db.r4.large",
+        "DBInstanceIdentifier": "test-db-cluster-nameinstance2",
+        "DBSubnetGroupName": Object {
+          "Ref": "RDSSubnets873FC54A",
+        },
+        "Engine": "aurora-postgresql",
+        "EngineVersion": "10.7",
+        "PubliclyAccessible": false,
+      },
+      "Type": "AWS::RDS::DBInstance",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RDSParameterGroup973BA941": Object {
+      "Properties": Object {
+        "Description": "parameter group for test-db-name",
+        "Family": "aurora-postgresql10",
+        "Parameters": Object {
+          "log_statement": "all",
+        },
+      },
+      "Type": "AWS::RDS::DBClusterParameterGroup",
+    },
+    "RDSSubnets873FC54A": Object {
+      "Properties": Object {
+        "DBSubnetGroupDescription": "Subnets for RDS database",
+        "SubnetIds": Array [
+          Object {
+            "Fn::ImportValue": "TestVPCStack:ExportsOutputRefVPCisolatedSubnet1Subnet84AF70385D9D8D66",
+          },
+          Object {
+            "Fn::ImportValue": "TestVPCStack:ExportsOutputRefVPCisolatedSubnet2Subnet8AE9E7657AFFAE94",
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBSubnetGroup",
+    },
+    "SecretA720EF05": Object {
+      "Properties": Object {
+        "Description": "RDS database auto-generated user password",
+        "GenerateSecretString": Object {
+          "ExcludeCharacters": ":/?#[]@!$&\\"'()*+,;=%{}|\\\\^~[]\`",
+          "GenerateStringKey": "password",
+          "PasswordLength": 32,
+          "SecretStringTemplate": "{\\"username\\": \\"test-user\\"}",
+        },
+        "Name": "TestRDSStackSecret",
+      },
+      "Type": "AWS::SecretsManager::Secret",
+    },
+    "SecretAttachment2E1B7C3B": Object {
+      "Properties": Object {
+        "SecretId": Object {
+          "Ref": "SecretA720EF05",
+        },
+        "TargetId": Object {
+          "Ref": "RDSE0E96D00",
+        },
+        "TargetType": "AWS::RDS::DBCluster",
+      },
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+    },
+  },
+}
+`;
