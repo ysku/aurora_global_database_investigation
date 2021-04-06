@@ -49,7 +49,7 @@ export class RDSStack extends Stack {
     const parameterGroup = new ParameterGroup(this, 'RDSParameterGroup', {
       description: `parameter group for ${dbName}`,
       engine: DatabaseClusterEngine.auroraPostgres({
-        version: AuroraPostgresEngineVersion.VER_10_7,
+        version: AuroraPostgresEngineVersion.VER_11_9,
       }),
       parameters: {
         log_statement: 'all',
@@ -72,7 +72,7 @@ export class RDSStack extends Stack {
       },
       port: 5432,
       engine: DatabaseClusterEngine.auroraPostgres({
-        version: AuroraPostgresEngineVersion.VER_10_7,
+        version: AuroraPostgresEngineVersion.VER_11_9,
       }),
       credentials: Credentials.fromSecret(this.secret),
     });
