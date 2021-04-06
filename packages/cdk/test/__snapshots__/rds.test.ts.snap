@@ -15,7 +15,7 @@ Object {
         },
         "DatabaseName": "test-db-name",
         "Engine": "aurora-postgresql",
-        "EngineVersion": "10.7",
+        "EngineVersion": "11.9",
         "MasterUserPassword": Object {
           "Fn::Join": Array [
             "",
@@ -62,7 +62,7 @@ Object {
           "Ref": "RDSSubnets873FC54A",
         },
         "Engine": "aurora-postgresql",
-        "EngineVersion": "10.7",
+        "EngineVersion": "11.9",
         "PubliclyAccessible": false,
       },
       "Type": "AWS::RDS::DBInstance",
@@ -80,7 +80,7 @@ Object {
           "Ref": "RDSSubnets873FC54A",
         },
         "Engine": "aurora-postgresql",
-        "EngineVersion": "10.7",
+        "EngineVersion": "11.9",
         "PubliclyAccessible": false,
       },
       "Type": "AWS::RDS::DBInstance",
@@ -89,7 +89,7 @@ Object {
     "RDSParameterGroup973BA941": Object {
       "Properties": Object {
         "Description": "parameter group for test-db-name",
-        "Family": "aurora-postgresql10",
+        "Family": "aurora-postgresql11",
         "Parameters": Object {
           "log_statement": "all",
         },

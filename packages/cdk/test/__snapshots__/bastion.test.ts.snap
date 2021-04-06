@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BastionStack snapshot 1`] = `
+Object {
+  "Mappings": Object {
+    "bastionAmiMapE6BABB0F": Object {
+      "ap-northeast-1": Object {
+        "ami": "ami-059b6d3840b03d6dd",
+      },
+    },
+  },
+  "Resources": Object {
+    "bastion34F27305": Object {
+      "DependsOn": Array [
+        "bastionroleFD8E05AF",
+      ],
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "IamInstanceProfile": Object {
+          "Ref": "bastionInstanceProfileBF7A08EB",
+        },
+        "ImageId": Object {
+          "Fn::FindInMap": Array [
+            "bastionAmiMapE6BABB0F",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            "ami",
+          ],
+        },
+        "InstanceType": "t2.micro",
+        "SecurityGroupIds": Array [
+          Object {
+            "Fn::ImportValue": "TestVPCStack:ExportsOutputFnGetAttdbaccesssg59FD6FC1GroupIdA22CF994",
+          },
+        ],
+        "SubnetId": Object {
+          "Fn::ImportValue": "TestVPCStack:ExportsOutputRefVPCprivateSubnet1SubnetE522290D7D3DE097",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "bastion",
+          },
+        ],
+        "UserData": Object {
+          "Fn::Base64": "#!/bin/bash",
+        },
+      },
+      "Type": "AWS::EC2::Instance",
+    },
+    "bastionInstanceProfileBF7A08EB": Object {
+      "Properties": Object {
+        "Roles": Array [
+          Object {
+            "Ref": "bastionroleFD8E05AF",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+    "bastionroleFD8E05AF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "ec2.",
+                      Object {
+                        "Ref": "AWS::URLSuffix",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/AmazonSSMManagedInstanceCore",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;
